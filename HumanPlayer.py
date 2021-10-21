@@ -39,10 +39,36 @@ class HumanPlayer(Player):
                     continue
 
 
-    def takeTurn(self):
-        # over write in the HumanPlayer and ComputerPlayer subclasses
-        pass
+    def takeTurn(self , otherPlayer):
+        while True:
+            print("Its time to take your shot")
+            row = int(input("Please enter in 0 - 9 for the row"))
+            col = int(input("Please enter in 0 - 9 for the column"))
+            if row > 9 or row < 0 or col > 9 or col < 0:
+                continue
+            if self.gridShots.isSpaceWater(row, col):
+                if otherPlayer.gridShips.isSpaceWater(row, col):
+                    otherPlayer.gridShips.changeSingleSpace(row, col, "o")
+                    self.gridShots.changeSingleSpace(row, col, "o")
+                    print("You missed")
+                    break
+                else:
+                    hitShip = otherPlayer.gridShips.returnLocation(row, col)
+                    otherPlayer.gridShips.changeSingleSpace(row, col, "x")
+                    self.gridShots.changeSingleSpace(row, col, "x")
+                    print("You hit a ship")
+                    if self.sinkShip(otherPlayer, hitShip):
+                        print("You sunk my", self.shipDictionary[hitShip])
+                    break
+            else:
+                continue
 
+    def sinkShip(self , otherPlayer , hitShip ):
+        for r in range( 9 ):
+            for c in range( 9 ):
+                if otherPlayer.gridShips.returnLocation( r , c ) == hitShip :
+                    return False
+        return True
 
     def canBePlaced(self , isVertical , row , col , size ):
         # 1 is vertical, 0 is horizonal
@@ -57,6 +83,3 @@ class HumanPlayer(Player):
 
         return True
 
-hp = HumanPlayer()
-hp.createShipGrid()
-hp.printGrids()
