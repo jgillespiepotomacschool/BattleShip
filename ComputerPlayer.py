@@ -46,7 +46,7 @@ class ComputerPlayer(Player):
             isVertical = random.randint(0,1)
             # 1 is vertical, 0 is horizonal
             if isVertical == 1:
-                row = random.randint(0,9-size)
+                row = random.randint(0,10-size)
                 col = random.randint(0,9)
                 if self.canBePlaced(isVertical, row, col , size) :
                     self.gridShips.changeCol(col, ship, row, size)
@@ -55,7 +55,7 @@ class ComputerPlayer(Player):
                     continue
             else:
                 row = random.randint(0, 9)
-                col = random.randint(0, 9-size)
+                col = random.randint(0, 10-size)
                 if self.canBePlaced(isVertical, row, col , size):
                     self.gridShips.changeRow( row, ship, col, size)
                     break

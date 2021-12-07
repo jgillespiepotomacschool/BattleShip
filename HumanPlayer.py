@@ -38,6 +38,26 @@ class HumanPlayer(Player):
                     print("Your entry was invalid, please try again")
                     continue
 
+    def canBePlaced(self , isVertical , row , col , size ):
+        # 1 is vertical, 0 is horizonal
+        if isVertical == 1 :
+            for r in range( size ):
+                if not self.gridShips.isSpaceWater( row + r , col ) :
+                    return False
+        else:
+            for c in range(size):
+                if not self.gridShips.isSpaceWater(row, col + c):
+                    return False
+
+        return True
+
+
+
+
+
+
+
+
 
     def takeTurn(self , otherPlayer):
         while True:
@@ -70,16 +90,5 @@ class HumanPlayer(Player):
                     return False
         return True
 
-    def canBePlaced(self , isVertical , row , col , size ):
-        # 1 is vertical, 0 is horizonal
-        if isVertical == 1 :
-            for r in range( size ):
-                if not self.gridShips.isSpaceWater( row + r , col ) :
-                    return False
-        else:
-            for c in range(size):
-                if not self.gridShips.isSpaceWater(row, col + c):
-                    return False
 
-        return True
 
